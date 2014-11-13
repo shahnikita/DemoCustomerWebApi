@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="app">
+<head>
+    <title>demo app</title>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-resource.min.js"></script>
+    <script src="Scripts/angular-route.min.js"></script>
+
+    <script src="Scripts/app/app.js"></script>
+    <script src="Scripts/app/models/customer.js"></script>
+    <!--<script src="Scripts/app/services/xyz.js"></script>-->
+    <script src="Scripts/app/services/customerServices.js"></script>
+    <script src="Scripts/app/controllers/customerController.js"></script>
+    <style>
+        #mydiv {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: grey;
+            opacity: .8;
+        }
+
+        .ajax-loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -32px; /* -1 * image width / 2 */
+            margin-top: -32px; /* -1 * image height / 2 */
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <div data-ng-controller="customerController" class="container">
+
+        <h1>{{page.title()}}</h1>
+
+        <p>
+            <a href="#/HomePage">Home</a> |
+            <a href="#/AddCustomer">AddCustomer</a> 
+            
+        </p>
+
+       
+        <ng-view>Loading...</ng-view>
+       
+        <script type="text/ng-template" id="detailPage.html">
+         
+            <label>Name:</label>{{customer.Name" }}
+        <label>Email:</label>{{customer.Email" }}
+            <!--<input type="button" value="get all customers" data-ng-click="getallcustomerclick()" class="btn btn-primary" />-->
+        </script>
+
+
+        <script type="text/ng-template" id="addCustomer.html">
+           
+            <form name="addCustomer" style="width: 600px; margin: 0px auto;">
+                <label>Name:</label><input type="text" data-ng-model="newcustomer.Name" required />
+                <label>Email:</label><input type="email" data-ng-model="newcustomer.Email" required />
+                <br />
+                <span class="error" data-ng-show="addCustomer.$error.email">Invalid Email format!</span>
+                <br />
+                <input type="submit" value="Add" data-ng-click="addCustomerClick(newcustomer)" class="btn btn-primary" />
+
+                <br />
+                <br />
+            </form>
+            <!--<input type="button" value="get all customers" data-ng-click="getallcustomerclick()" class="btn btn-primary" />-->
+        </script>
+
+
+        
+
+        <script type="text/ng-template" id="homePage.html">
+            <table class="table table-bordered table-hover" style="width: auto">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+
+
+                <tr data-ng-repeat="customer in customers">
+                    <td>{{ customer.CustomerID }}</td>
+                    <td>{{ customer.Name }}</td>
+                    <td>{{ customer.Email }}</td>
+                    <td>
+                        <p>
+                            <a data-ng-click="getcustomerbyIdClick(customer.CustomerID)" href="#/DetailPage">ViewDetails</a>
+                            <a data-ng-click="deleteCustomerClick(customer.CustomerID)" href="javascript:;">Delete</a>
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+            <!--<div>
+                <label>Name:</label>{{customer.Name" }}
+                <label>Email:</label>{{customer.Email" }}
+            </div>-->
+        </script>
+
+     
+
+    </div>
+</body>
+</html>
